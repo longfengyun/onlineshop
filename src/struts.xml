@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="false" />
+	<package name="shop" extends="struts-default" namespace="/">
+	    <interceptors>
+	        <interceptor name="privilegeInterceptor" class="com.amaker.shop.interceptor.PrivilegeInterceptor"/>
+	    </interceptors>
+	    <global-results>
+	        <result name="msg">/WEB-INF/jsp/Msg.jsp</result>
+	        <result name="loginFail">/admin/index.jsp</result>
+	        <result name="login">/WEB-INF/jsp/Login.jsp</result>
+	    </global-results>
+	    <!-- 配置首页访问的Action -->
+		  <action name="index" class="indexAction">
+			 <result name="index">/WEB-INF/jsp/Index.jsp</result>
+		  </action>
+		  
+		<!-- 配置用户模块的Action -->
+		  <action name="user_*" class="userAction" method="{1}">
+			 <result name="registerPage">/WEB-INF/jsp/Register.jsp</result>
+			 <result name="input">/WEB-INF/jsp/Register.jsp</result>
+			 <result name="loginPage">/WEB-INF/jsp/Login.jsp</result>
+			 <result name="loginSuccess" type="redirectAction">index</result>
+			 <result name="logout" type="redirectAction">index</result>
+			 <result name="checkCodeError">/WEB-INF/jsp/Register.jsp</result>
+			 <result name="checkCodeLoginError">/WEB-INF/jsp/Login.jsp</result>
+		  </action>
+		 
+		 <!-- 配置验证码的Action -->
+		 <action name="checkImg" class="checkImgAction"/>
+		 
+		 <!-- 配置商品模块的Action -->
+		  <action name="product_*" class="productAction" method="{1}">
+		       <result name="findByPid">/WEB-INF/jsp/Product.jsp</result>
+		       <result name="findByCid">/WEB-INF/jsp/ProductList.jsp</result>
+		        <result name="findByCsid">/WEB-INF/jsp/ProductList.jsp</result>
+		  </action>
+		  
+		   <!-- 配置购物车模块的Action -->
+		  <action name="cart_*" class="cartAction" method="{1}">
+		       <result name="addCart">/WEB-INF/jsp/Cart.jsp</result>
+		       <result name="clearCart">/WEB-INF/jsp/Cart.jsp</result>
+		       <result name="removeCart">/WEB-INF/jsp/Cart.jsp</result>
+		       <result name="myCart">/WEB-INF/jsp/Cart.jsp</result>
+		  </action>
+		  
+		  <!-- 配置订单模块的Action -->
+		  <action name="order_*" class="orderAction" method="{1}">
+		       <result name="saveOrder">/WEB-INF/jsp/Order.jsp</result>
+		       <result name="findByUidSuccess">/WEB-INF/jsp/OrderList.jsp</result>
+		       <result name="findByOidSuccess">/WEB-INF/jsp/Order.jsp</result>
+		       <result name="updateStateSuccess" type="redirectAction">order_findByUid.action?page=1</result>
+		  </action>
+		  
+		  <!-- 配置后台登录模块的Action -->
+		  <action name="adminUser_*" class="adminUserAction" method="{1}">
+		       <result name="loginSuccess">/admin/home.jsp</result>
+		       <result name="logout">/admin/index.jsp</result>
+		       <interceptor-ref name="privilegeInterceptor">
+				<param name="excludeMethods">login</param>
+			   </interceptor-ref>
+			   <interceptor-ref name="defaultStack"/>
+		  </action>
+		  
+		  <!-- 配置后台一级分类模块的Action -->
+		  <action name="adminCategory_*" class="adminCategoryAction" method="{1}">
+		       <result name="findAll">/admin/category/list.jsp</result>
+		       <result name="saveSuccess" type="redirectAction">adminCategory_findAll.action</result>
+		       <result name="deleteSuccess" type="redirectAction">adminCategory_findAll.action</result>
+		       <result name="editSuccess">/admin/category/edit.jsp</result>
+		       <result name="updateSuccess" type="redirectAction">adminCategory_findAll.action</result>
+		       <interceptor-ref name="privilegeInterceptor">
+				<param name="excludeMethods">login</param>
+			    </interceptor-ref>
+			    <interceptor-ref name="defaultStack"/>
+		  </action>
+		  
+		  <!-- 配置后台二级分类模块的Action -->
+		  <action name="adminCategorySecond_*" class="adminCategorySecondAction" method="{1}">
+               <result name="findAll">/admin/categorysecond/list.jsp</result>
+                <result name="addPageSuccess">/admin/categorysecond/add.jsp</result>
+                <result name="saveSuccess" type="redirectAction">adminCategorySecond_findAll.action?page=1</result>
+                <result name="deleteSuccess" type="redirectAction">adminCategorySecond_findAll.action?page=1</result>
+                <result name="editSuccess">/admin/categorysecond/edit.jsp</result>
+                <result name="updateSuccess" type="redirectAction">adminCategorySecond_findAll.action?page=1</result>
+                <interceptor-ref name="privilegeInterceptor">
+				<param name="excludeMethods">login</param>
+			    </interceptor-ref>
+			    <interceptor-ref name="defaultStack"/>
+		  </action>
+		  
+		  <!-- 配置后台商品模块的Action -->
+		  <action name="adminProduct_*" class="adminProductAction" method="{1}">
+               <result name="findAll">/admin/product/list.jsp</result>
+               <result name="addPageSuccess" >/admin/product/add.jsp</result>
+               <result name="saveSuccess" type="redirectAction">adminProduct_findAll.action?page=1</result>
+               <result name="deleteSuccess" type="redirectAction">adminProduct_findAll.action?page=1</result>
+               <result name="editSuccess">/admin/product/edit.jsp</result>
+               <result name="updateSuccess" type="redirectAction">adminProduct_findAll.action?page=1</result>
+               <interceptor-ref name="privilegeInterceptor">
+				<param name="excludeMethods">login</param>
+			    </interceptor-ref>
+			    <interceptor-ref name="defaultStack"/>
+		  </action>
+		  
+		  <!-- 配置后台订单模块的Action -->
+		  <action name="adminOrder_*" class="adminOrderAction" method="{1}">
+               <result name="findAll">/admin/order/list.jsp</result>
+               <result name="findOrderItem">/admin/order/orderItem.jsp</result>
+               <result name="updateStateSuccess" type="redirectAction">adminOrder_findAll.action?page=1</result>
+               <interceptor-ref name="privilegeInterceptor">
+				<param name="excludeMethods">login</param>
+			    </interceptor-ref>
+			    <interceptor-ref name="defaultStack"/>
+		  </action>
+	  </package>
+</struts>

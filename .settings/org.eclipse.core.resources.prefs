@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/jsp/Cart.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/Index.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/Login.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/Menu.jsp=UTF-8
+encoding//WebRoot/admin/product/list.jsp=UTF-8
+encoding//src/com/amaker/shop/interceptor=UTF-8
+encoding//src/com/amaker/shop/interceptor/PrivilegeInterceptor.java=UTF-8
+encoding//src/com/amaker/shop/util/PageHibernateCallback.java=UTF-8
